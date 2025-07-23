@@ -1,0 +1,9 @@
+# dependencies
+/node_modules/
+
+# Vite build
+/dist/
+
+# environment
+.env
+.env.local
