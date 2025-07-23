@@ -350,8 +350,6 @@
       </div>
     </form>
 
-    <!-- Call Logs for existing assistants -->
-    <CallLog v-if="isEdit" :assistant-id="route.params.id" />
   </div>
 </template>
 
@@ -360,7 +358,6 @@ import { reactive, ref, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { useAssistantStore } from '../store/assistants'
-import CallLog from '../components/CallLog.vue'
 
 const store = useAssistantStore()
 const route = useRoute()

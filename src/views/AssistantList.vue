@@ -92,9 +92,9 @@
           </div>
           <router-link
             :to="`/assistants/${assistant._id}`"
-            class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
+            class="btn-secondary text-sm"
           >
-            Edit →
+            View Details
           </router-link>
         </div>
       </div>

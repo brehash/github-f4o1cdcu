@@ -9,7 +9,8 @@ const routes = [
   { path: '/',         name: 'Dashboard',    component: Dashboard },
   { path: '/assistants',       name: 'List',    component: AssistantList },
   { path: '/assistants/new',   name: 'Create',  component: AssistantForm },
-  { path: '/assistants/:id',   name: 'Edit',    component: AssistantForm, props: true },
+  { path: '/assistants/:id',   name: 'Details', component: () => import('../views/AssistantDetails.vue'), props: true },
+  { path: '/assistants/:id/edit', name: 'Edit',  component: AssistantForm, props: true },
   { path: '/calls',           name: 'Calls',   component: CallLogs },
   { path: '/transcripts',     name: 'Transcripts',  component: LiveTranscripts },
 ]
