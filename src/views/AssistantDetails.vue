@@ -53,7 +53,7 @@
       </div>
 
       <!-- Assistant Information Cards -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Basic Information -->
         <div class="card p-6">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
@@ -155,7 +155,7 @@
       </div>
 
       <!-- Greetings and Messages -->
-      <div v-if="store.current.initialGreeting || store.current.fallbackMessage" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div v-if="store.current.initialGreeting || store.current.fallbackMessage" class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div v-if="store.current.initialGreeting" class="card p-6">
           <h3 class="text-md font-semibold text-gray-900 dark:text-white mb-3">Initial Greeting</h3>
           <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">

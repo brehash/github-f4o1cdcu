@@ -11,13 +11,12 @@
         </p>
       </div>
       <router-link
-        to="/assistants"
-        class="btn-secondary"
+        :to="isEdit ? `/assistants/${route.params.id}` : '/assistants'"
+        class="p-2 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
       >
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
-        Back to List
       </router-link>
     </div>
 
@@ -337,7 +336,7 @@
           </button>
         </div>
         <div class="flex space-x-3 order-1 sm:order-2">
-          <router-link to="/assistants" class="btn-secondary">
+          <router-link :to="isEdit ? `/assistants/${route.params.id}` : '/assistants'" class="btn-secondary">
             Cancel
           </router-link>
           <button type="submit" class="btn-primary">
