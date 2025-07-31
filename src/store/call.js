@@ -8,14 +8,15 @@ export const useCallStore = defineStore('call', {
   }),
   actions: {
     async fetchCalls(assistantId) {
-      const params = assistantId ? { assistantId } : {};
+      if (!assistantId) return;
       this.calls = await axios
-        .get(`${import.meta.env.VITE_API_BASE_URL}/calls`, { params })
+        .get(`${import.meta.env.VITE_API_BASE_URL}/assistants/${assistantId}/calls`)
         .then(r => r.data);
     },
     async fetchTranscripts(callId) {
+      if (!callId) return;
       this.transcripts = await axios
-        .get(`${import.meta.env.VITE_API_BASE_URL}/transcripts`, { params: { callId } })
+        .get(`${import.meta.env.VITE_API_BASE_URL}/calls/${callId}/transcriptions`)
         .then(r => r.data);
     }
   }
