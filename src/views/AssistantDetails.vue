@@ -8,7 +8,7 @@
 
     <div v-else>
       <!-- Header -->
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between mb-5">
         <div class="flex items-center space-x-4">
           <router-link
             to="/assistants"
@@ -53,7 +53,7 @@
       </div>
 
       <!-- Assistant Information Cards -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         <!-- Basic Information -->
         <div class="card p-6">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
