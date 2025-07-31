@@ -92,8 +92,9 @@
             <select v-model="form.status" class="form-select" required>
               <option value="">Select status...</option>
               <option value="active">Active - Ready to handle calls</option>
-              <option value="inactive">Inactive - Temporarily disabled</option>
+              <option value="paused">Paused - Temporarily disabled</option>
               <option value="draft">Draft - Still being configured</option>
+              <option value="archived">Archived - This AI Assistant is archived</option>
             </select>
             <p class="form-help">Current operational status of this assistant</p>
           </div>
@@ -110,14 +111,14 @@
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+          <!-- <div>
             <label class="form-label">AI Engine</label>
             <select v-model="form.engine" class="form-select" required>
               <option value="ollama">Ollama - Local AI models</option>
               <option value="openai">OpenAI - Cloud-based models</option>
             </select>
             <p class="form-help">Choose between local Ollama models or OpenAI's cloud services</p>
-          </div>
+          </div> -->
 
           <div>
             <label class="form-label">AI Model</label>
@@ -133,7 +134,7 @@
           <div>
             <label class="form-label">Voice ID</label>
             <input
-              v-model="form.voiceId"
+              v-model="form.voice_id"
               type="text"
               class="form-input"
               placeholder="e.g., alloy, echo, fable, onyx, nova, shimmer"
@@ -141,7 +142,7 @@
             <p class="form-help">Voice identifier for text-to-speech (depends on your TTS provider)</p>
           </div>
 
-          <div>
+          <!-- <div>
             <label class="form-label">Response Temperature</label>
             <input
               v-model.number="form.temperature"
@@ -153,12 +154,12 @@
               placeholder="0.7"
             />
             <p class="form-help">Controls randomness: 0.0 (focused) to 2.0 (creative). Default: 0.7</p>
-          </div>
+          </div> -->
 
           <div class="md:col-span-2">
             <label class="form-label">System Prompt</label>
             <textarea
-              v-model="form.systemPrompt"
+              v-model="form.system_prompt"
               rows="4"
               class="form-textarea"
               placeholder="You are a helpful customer service assistant. Be polite, professional, and concise..."
@@ -167,7 +168,7 @@
             <p class="form-help">Instructions that define your assistant's behavior, personality, and response style</p>
           </div>
 
-          <div class="md:col-span-2">
+          <!-- <div class="md:col-span-2">
             <label class="form-label">Initial Greeting</label>
             <textarea
               v-model="form.initialGreeting"
@@ -176,9 +177,9 @@
               placeholder="Hello! Thank you for calling. How can I help you today?"
             ></textarea>
             <p class="form-help">The first message your assistant will say when someone calls</p>
-          </div>
+          </div> -->
 
-          <div class="md:col-span-2">
+          <!-- <div class="md:col-span-2">
             <label class="form-label">Fallback Message</label>
             <textarea
               v-model="form.fallbackMessage"
@@ -187,7 +188,7 @@
               placeholder="I'm sorry, I didn't understand that. Could you please rephrase your question?"
             ></textarea>
             <p class="form-help">Message used when the assistant doesn't understand or can't help</p>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -275,7 +276,7 @@
       </div>
 
       <!-- Advanced Settings -->
-      <div class="card p-6">
+      <!-- <div class="card p-6">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
           <svg class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
@@ -318,7 +319,7 @@
             <p class="form-help mt-1">Store conversation transcripts for analysis and improvement (ensure compliance with privacy laws)</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Form Actions -->
       <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
@@ -371,22 +372,21 @@ const form = reactive({
   extension: '',
   description: '',
   status: 'draft',
-  engine: 'ollama',
   model: '',
-  voiceId: '',
-  temperature: 0.7,
-  systemPrompt: '',
-  initialGreeting: '',
-  fallbackMessage: '',
+  voice_id: '',
+  // temperature: 0.7,
+  system_prompt: '',
+  // initialGreeting: '',
+  // fallbackMessage: '',
   hasTrunk: false,
-  phoneNumber: '',
-  sipHost: '',
-  sipPort: 5060,
-  sipUsername: '',
-  sipPassword: '',
-  maxTokens: 500,
-  timeout: 30,
-  enableLogging: true,
+  phone_number: '',
+  sip_server: '',
+  sip_port: 5060,
+  sip_username: '',
+  sip_password: '',
+  // maxTokens: 500,
+  // timeout: 30,
+  // enableLogging: true,
 })
 
 // Compute next free extension on new
@@ -404,7 +404,7 @@ async function loadModels() {
   modelOptions.value = []
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/models?engine=${form.engine}`
+      `${import.meta.env.VITE_API_BASE_URL}/models`
     )
     modelOptions.value = res.data
     if (!modelOptions.value.includes(form.model)) {
@@ -414,26 +414,28 @@ async function loadModels() {
     console.error('Failed to load models:', err)
   }
 }
-watch(() => form.engine, loadModels)
 
 onMounted(async () => {
   await loadModels()
 
   if (isEdit.value) {
     await store.fetchById(route.params.id)
+    delete store.current.created_at // Remove read-only field
+    delete store.current.updated_at // Remove read-only field
+
     Object.assign(form, {
       ...store.current,
       // Set default values for new fields if they don't exist
       name: store.current.name || '',
       description: store.current.description || '',
       status: store.current.status || 'draft',
-      voiceId: store.current.voiceId || '',
-      temperature: store.current.temperature ?? 0.7,
-      initialGreeting: store.current.initialGreeting || '',
-      fallbackMessage: store.current.fallbackMessage || '',
-      maxTokens: store.current.maxTokens || 500,
-      timeout: store.current.timeout || 30,
-      enableLogging: store.current.enableLogging ?? true,
+      voice_id: store.current.voice_id || '',
+      // temperature: store.current.temperature ?? 0.7,
+      // initialGreeting: store.current.initialGreeting || '',
+      // fallbackMessage: store.current.fallbackMessage || '',
+      // maxTokens: store.current.maxTokens || 500,
+      // timeout: store.current.timeout || 30,
+      // enableLogging: store.current.enableLogging ?? true,
     })
     // if any SIP field present, enable the trunk block
     form.hasTrunk = !!(form.sipHost || form.sipUsername || form.sipPassword)

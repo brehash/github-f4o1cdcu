@@ -37,7 +37,7 @@
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div
         v-for="assistant in assistants"
-        :key="assistant._id"
+        :key="assistant.id"
         class="card p-6 hover:shadow-lg transition-shadow duration-200"
       >
         <div class="flex items-start justify-between mb-4">
@@ -91,7 +91,7 @@
             {{ assistant.phoneNumber || 'No phone' }}
           </div>
           <router-link
-            :to="`/assistants/${assistant._id}`"
+            :to="`/assistants/${assistant.id}`"
             class="btn-secondary text-sm"
           >
             View Details

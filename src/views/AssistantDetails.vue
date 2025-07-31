@@ -23,7 +23,7 @@
               {{ store.current.name || `Assistant ${store.current.extension}` }}
             </h1>
             <p class="text-gray-600 dark:text-gray-400">
-              Extension {{ store.current.extension }} • {{ store.current.engine }} • {{ store.current.model }}
+              Extension {{ store.current.extension }} • {{ store.current.model }}
             </p>
           </div>
         </div>
@@ -41,7 +41,7 @@
             {{ store.current.status || 'draft' }}
           </span>
           <router-link
-            :to="`/assistants/${store.current._id}/edit`"
+            :to="`/assistants/${store.current.id}/edit`"
             class="btn-primary"
           >
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,22 +91,22 @@
             AI Configuration
           </h2>
           <div class="space-y-3">
-            <div>
+            <!-- <div>
               <p class="text-sm font-medium text-gray-500 dark:text-gray-400">AI Engine</p>
               <p class="text-sm text-gray-900 dark:text-white capitalize">{{ store.current.engine }}</p>
-            </div>
+            </div> -->
             <div>
               <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Model</p>
               <p class="text-sm text-gray-900 dark:text-white">{{ store.current.model }}</p>
             </div>
-            <div v-if="store.current.voiceId">
+            <div v-if="store.current.voice_id">
               <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Voice ID</p>
-              <p class="text-sm text-gray-900 dark:text-white">{{ store.current.voiceId }}</p>
+              <p class="text-sm text-gray-900 dark:text-white">{{ store.current.voice_id }}</p>
             </div>
-            <div>
+            <!-- <div>
               <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Temperature</p>
               <p class="text-sm text-gray-900 dark:text-white">{{ store.current.temperature ?? 0.7 }}</p>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -142,7 +142,7 @@
       </div>
 
       <!-- System Prompt -->
-      <div v-if="store.current.systemPrompt" class="card p-6">
+      <div v-if="store.current.system_prompt" class="card p-6">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
           <svg class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
@@ -150,16 +150,16 @@
           System Prompt
         </h2>
         <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-          <p class="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap">{{ store.current.systemPrompt }}</p>
+          <p class="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap">{{ store.current.system_prompt }}</p>
         </div>
       </div>
 
       <!-- Greetings and Messages -->
-      <div v-if="store.current.initialGreeting || store.current.fallbackMessage" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div v-if="store.current.initialGreeting" class="card p-6">
+      <div v-if="store.current.greeting || store.current.fallbackMessage" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div v-if="store.current.greeting" class="card p-6">
           <h3 class="text-md font-semibold text-gray-900 dark:text-white mb-3">Initial Greeting</h3>
           <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
-            <p class="text-sm text-gray-800 dark:text-gray-200">{{ store.current.initialGreeting }}</p>
+            <p class="text-sm text-gray-800 dark:text-gray-200">{{ store.current.greeting }}</p>
           </div>
         </div>
         
