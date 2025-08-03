@@ -7,10 +7,10 @@ export const useCallStore = defineStore('call', {
     transcripts: [],
   }),
   actions: {
-    async fetchCalls(assistantId) {
-      if (!assistantId) return;
+    async fetchCalls(extension) {
+      if (!extension) return;
       this.calls = await axios
-        .get(`${import.meta.env.VITE_API_BASE_URL}/assistants/${assistantId}/calls`)
+        .get(`${import.meta.env.VITE_API_BASE_URL}/calls/assistant/${extension}`)
         .then(r => r.data);
     },
     async fetchTranscripts(callId) {

@@ -186,6 +186,7 @@ onMounted(async () => {
 })
 
 async function filterCalls() {
+  console.log(selectedAssistant);
   await callStore.fetchCalls(selectedAssistant.value)
 }
 

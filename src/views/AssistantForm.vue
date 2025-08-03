@@ -120,7 +120,7 @@
             <p class="form-help">Choose between local Ollama models or OpenAI's cloud services</p>
           </div> -->
 
-          <div>
+          <!-- <div>
             <label class="form-label">AI Model</label>
             <select v-model="form.model" class="form-select" required>
               <option disabled value="">{{ modelOptions.length ? 'Select a model...' : 'Loading models...' }}</option>
@@ -129,9 +129,9 @@
               </option>
             </select>
             <p class="form-help">The specific AI model that will power your assistant's responses</p>
-          </div>
+          </div> -->
 
-          <div>
+          <!-- <div>
             <label class="form-label">Voice ID</label>
             <input
               v-model="form.voice_id"
@@ -140,7 +140,7 @@
               placeholder="e.g., alloy, echo, fable, onyx, nova, shimmer"
             />
             <p class="form-help">Voice identifier for text-to-speech (depends on your TTS provider)</p>
-          </div>
+          </div> -->
 
           <!-- <div>
             <label class="form-label">Response Temperature</label>
@@ -160,7 +160,7 @@
             <label class="form-label">System Prompt</label>
             <textarea
               v-model="form.system_prompt"
-              rows="4"
+              rows="25"
               class="form-textarea"
               placeholder="You are a helpful customer service assistant. Be polite, professional, and concise..."
               required
@@ -221,7 +221,7 @@
           <div>
             <label class="form-label">Phone Number (DID)</label>
             <input
-              v-model="form.phoneNumber"
+              v-model="form.phone_number"
               type="text"
               class="form-input"
               placeholder="+1 (555) 123-4567"
@@ -230,9 +230,9 @@
           </div>
 
           <div>
-            <label class="form-label">SIP Host</label>
+            <label class="form-label">SIP Server</label>
             <input
-              v-model="form.sipHost"
+              v-model="form.sip_server"
               type="text"
               class="form-input"
               placeholder="sip.provider.com"
@@ -243,7 +243,7 @@
           <div>
             <label class="form-label">SIP Port</label>
             <input
-              v-model.number="form.sipPort"
+              v-model.number="form.sip_port"
               type="number"
               class="form-input"
               placeholder="5060"
@@ -254,7 +254,7 @@
           <div>
             <label class="form-label">SIP Username</label>
             <input
-              v-model="form.sipUsername"
+              v-model="form.sip_username"
               type="text"
               class="form-input"
               placeholder="username"
@@ -265,7 +265,7 @@
           <div class="md:col-span-2">
             <label class="form-label">SIP Password</label>
             <input
-              v-model="form.sipPassword"
+              v-model="form.sip_password"
               type="password"
               class="form-input"
               placeholder="Enter password..."
@@ -368,22 +368,62 @@ const errorMessage = ref('')
 const modelOptions = ref([])
 
 const form = reactive({
-  name: '',
+  name: 'Test',
   extension: '',
-  description: '',
+  description: 'Test',
   status: 'draft',
-  model: '',
+  model: 'llama3.2:3b',
   voice_id: '',
   // temperature: 0.7,
-  system_prompt: '',
+  system_prompt: `## Identity
+You are Daniel, a calm and confident customer support agent for Kspices, an e-commerce site. You are an expert in bourbon vanilla from Madagascar and its derivatives. Your role is to answer only questions related to that product category. You do not engage with or respond to unrelated product inquiries. For order-related issues, you may politely ask for the order number, but only if it's for bourbon vanilla or its derivations. Always stay friendly, helpful, and within your domain of expertise.
+
+## Style Guardrails
+Be Concise: Keep responses short, focused, and direct.
+Embrace Variety: Use natural variations in language to keep things engaging and clear.
+Be Conversational: Use casual, friendly tone with everyday phrasing and light fillers like "um", "so like", "uh".
+Be Proactive: Guide the conversation with gentle next steps or suggestions without overwhelming the user.
+Avoid multiple questions in a single response.
+Get clarity: If the user's question or response is vague or partial, gently follow up for more detail.
+Use conversational references to dates when necessary (like “next Tuesday” or “this coming Friday morning”).
+
+## Response Guideline
+Adapt and Guess: Respond intelligently to possible transcription errors without calling them out directly.
+Stay in Character: You are Daniel, the bourbon vanilla expert. Gently redirect anything outside that.
+Ensure Fluid Dialogue: Keep your responses flowing naturally and friendly, like you’re chatting with someone one-on-one.
+
+## Task
+You will follow the steps below. Only ask one question per response. Keep everything relevant to bourbon vanilla from Madagascar.
+
+1. Begin each call with a calm and friendly greeting:
+   - “Hey there, welcome to Kspices! You’re speaking with Daniel—I'm your bourbon vanilla specialist. If you’ve got any questions about our Madagascar vanilla or your order, I’m here for it. Let’s get started!”
+
+2. Handle product questions:
+   - Provide concise and friendly answers about bourbon vanilla from Madagascar and its derivations.
+   - Never respond to or acknowledge questions unrelated to your area of expertise. Instead say:
+     - “Hmm, I actually only support our bourbon vanilla products—but I’d recommend checking with our main support team for that.”
+
+3. Handle order-related support:
+   - If it’s a vanilla-related order issue, kindly ask:
+     - “Ok, can you share your order number with me so I can take a quick look?”
+
+4. If the user gets frustrated or asks to speak to a human, transfer the call.
+   - trigger: transfer_call
+
+5. At the end of the conversation, wrap up by asking:
+   - “Alright, do you have any other questions I can help with about our bourbon vanilla?”
+     - If yes, answer concisely within your scope.
+     - If no, end the call.
+     - trigger: end_call
+`,
   // initialGreeting: '',
   // fallbackMessage: '',
   hasTrunk: false,
-  phone_number: '',
-  sip_server: '',
+  phone_number: '+16027533001',
+  sip_server: 'gw1.siptrunk.com',
   sip_port: 5060,
-  sip_username: '',
-  sip_password: '',
+  sip_username: '42334898',
+  sip_password: 'btytpd8cynk8mdmm',
   // maxTokens: 500,
   // timeout: 30,
   // enableLogging: true,
@@ -416,7 +456,7 @@ async function loadModels() {
 }
 
 onMounted(async () => {
-  await loadModels()
+  // await loadModels()
 
   if (isEdit.value) {
     await store.fetchById(route.params.id)
@@ -450,11 +490,11 @@ async function onSubmit() {
     const payload = { ...form }
     if (!form.hasTrunk) {
       // remove optional fields
-      delete payload.phoneNumber
-      delete payload.sipHost
-      delete payload.sipPort
-      delete payload.sipUsername
-      delete payload.sipPassword
+      delete payload.phone_number
+      delete payload.sip_server
+      delete payload.sip_port
+      delete payload.sip_username
+      delete payload.sip_password
     }
     delete payload.hasTrunk // This is just a UI helper
     

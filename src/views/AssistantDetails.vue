@@ -172,7 +172,7 @@
       </div>
 
       <!-- Call Logs Section -->
-      <CallLog :assistant-id="route.params.id" />
+      <CallLog :extension="store.current.extension" />
     </div>
   </div>
 </template>

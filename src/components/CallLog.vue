@@ -7,7 +7,7 @@
       Call History
     </h3>
     
-    <div v-if="store.calls.length === 0" class="text-center py-8">
+    <div v-if="callStore.calls.length === 0" class="text-center py-8">
       <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
@@ -16,7 +16,7 @@
     
     <div v-else class="space-y-3">
       <div 
-        v-for="call in store.calls" 
+        v-for="call in callStore.calls" 
         :key="call._id"
         class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200"
       >
@@ -52,7 +52,7 @@
     </div>
 
     <!-- Transcript Modal/Section -->
-    <div v-if="store.transcripts.length > 0" class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+    <div v-if="callStore.transcripts.length > 0" class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
       <div class="flex items-center justify-between mb-4">
         <h4 class="text-md font-medium text-gray-900 dark:text-white">Call Transcript</h4>
         <button
@@ -67,7 +67,7 @@
       </div>
       <div class="space-y-3 max-h-96 overflow-y-auto">
         <div 
-          v-for="transcript in store.transcripts" 
+          v-for="transcript in callStore.transcripts" 
           :key="transcript._id"
           class="flex items-start space-x-3 p-3 rounded-lg"
           :class="transcript.role === 'user' 
@@ -104,21 +104,21 @@
 import { useCallStore } from '../store/call'
 import { watch, onMounted } from 'vue'
 
-const props = defineProps({ assistantId: String })
-const store = useCallStore()
+const props = defineProps({ extension: String })
+const callStore = useCallStore()
 
 async function load() {
-  if (props.assistantId) {
-    await store.fetchCalls(props.assistantId)
+  if (props.extension) {
+    await callStore.fetchCalls(props.extension)
   }
 }
 
 async function viewTranscripts(callId) {
-  await store.fetchTranscripts(callId)
+  await callStore.fetchTranscripts(callId)
 }
 
 function downloadTranscript() {
-  const lines = store.transcripts.map(t => 
+  const lines = callStore.transcripts.map(t => 
     `[${t.role.toUpperCase()}] ${t.text}`
   ).join('\n')
   
@@ -133,6 +133,6 @@ function downloadTranscript() {
   URL.revokeObjectURL(url)
 }
 
-watch(() => props.assistantId, load)
+watch(() => props.extension, load)
 onMounted(load)
 </script>

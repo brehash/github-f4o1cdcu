@@ -23,19 +23,19 @@ const assistantStore = useAssistantStore();
 const transcriptStore = useTranscriptStore();
 
 const wsUrl = import.meta.env.VITE_WEBSOCKET_URL + '/ws';
-const ws = new WebSocket(wsUrl);
+// const ws = new WebSocket(wsUrl);
 
-ws.addEventListener('open', () => {
-  console.log('✅ WS connected to', wsUrl);
-});
-ws.addEventListener('message', ({ data }) => {
-  const msg = JSON.parse(data);
-  if (msg.type === 'assistant') {
-    // On any assistant change, refetch the list
-    assistantStore.fetchAll();
-  }
-  if (msg.type === 'transcript') {
-    // Push new transcript into store
-    transcriptStore.add(msg.transcript);
-  }
-});
+// ws.addEventListener('open', () => {
+//   console.log('✅ WS connected to', wsUrl);
+// });
+// ws.addEventListener('message', ({ data }) => {
+//   const msg = JSON.parse(data);
+//   if (msg.type === 'assistant') {
+//     // On any assistant change, refetch the list
+//     assistantStore.fetchAll();
+//   }
+//   if (msg.type === 'transcript') {
+//     // Push new transcript into store
+//     transcriptStore.add(msg.transcript);
+//   }
+// });
